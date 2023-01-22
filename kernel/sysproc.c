@@ -99,5 +99,11 @@ sys_uptime(void)
 uint64
 sys_trace(void)
 {
-  panic("sys_trace() has not been implemented yet");
+  struct proc *p = myproc();
+
+  // retrieve the trace mask
+  if (argint(0, &p->trace_mask) < 0)
+    return -1;
+
+  return 0;
 }
