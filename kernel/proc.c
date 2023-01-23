@@ -694,3 +694,18 @@ procdump(void)
     printf("\n");
   }
 }
+
+uint64
+nproc(struct sysinfo *addr)
+{
+  uint64 cnt = 0;
+
+  for (int i = 0; i < NPROC; i++) {
+    acquire(&proc[i].lock);
+    if (proc[i].state != UNUSED)
+      cnt++;
+    release(&proc[i].lock);
+  }
+
+  return cnt;
+}
